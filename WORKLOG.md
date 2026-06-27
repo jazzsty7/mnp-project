@@ -1,36 +1,36 @@
 # WORKLOG
 
-## Current State
+## 현재 상태
 
-The chat MVP has been extended with room creation and message interaction flows.
+채팅 MVP에 방 생성과 메시지 상호작용 흐름이 추가되어 있다.
 
-### Implemented
+### 구현 완료
 
-- Chat list page has a `+` button that opens a create-room sheet.
-- The create-room sheet supports selecting one or more friends.
-- 1:1 room behavior:
-  - room title becomes the selected friend name
-  - room opens directly without requiring a separate title
-- Group room behavior:
-  - title input is shown when 2 or more friends are selected
-  - if the user leaves the title blank, the selected names are joined with commas
-  - room count is displayed on the same line as the title, e.g. `(3명)`
-- Chat room header:
-  - centered title
-  - ellipsis for overflow
-  - spacing preserved around back and menu buttons
-- Message menu in chat room:
-  - long-press bubble to open popup
-  - reply / copy / save / delete / cancel actions
-- Reply behavior:
-  - reply preview appears only after selecting `Reply`
-  - the reply `X` closes the reply preview and restores the normal composer
-- Save/Delete behavior:
-  - enter selection mode
-  - show left-side selection controls
-  - show bottom action bar
+- 채팅 목록 페이지에 방 생성 시트를 여는 `+` 버튼이 있다.
+- 방 생성 시트에서 친구를 1명 이상 선택할 수 있다.
+- 1:1 방 동작:
+  - 방 제목은 선택한 친구 이름이 된다
+  - 별도 제목 입력 없이 바로 방이 열린다
+- 그룹 방 동작:
+  - 친구를 2명 이상 선택하면 제목 입력란이 표시된다
+  - 제목을 비워두면 선택한 이름을 쉼표로 연결한다
+  - 방 인원 수가 제목과 같은 줄에 표시된다, 예: `(3명)`
+- 채팅방 헤더:
+  - 제목 가운데 정렬
+  - 길면 말줄임표 처리
+  - 뒤로가기와 메뉴 버튼 주변 간격 유지
+- 채팅방 메시지 메뉴:
+  - 말풍선을 길게 눌러 팝업을 연다
+  - 답장 / 복사 / 저장 / 삭제 / 취소 동작이 있다
+- 답장 동작:
+  - `Reply`를 선택해야만 답장 미리보기가 나타난다
+  - 답장 `X`를 누르면 미리보기가 닫히고 일반 작성기로 돌아간다
+- 저장/삭제 동작:
+  - 선택 모드로 진입한다
+  - 왼쪽 선택 컨트롤을 보여준다
+  - 하단 액션 바를 보여준다
 
-### Key Files
+### 주요 파일
 
 - `messenger-mvp/pages/chat_list.html`
 - `messenger-mvp/pages/chat_room.html`
@@ -38,34 +38,44 @@ The chat MVP has been extended with room creation and message interaction flows.
 - `messenger-mvp/assets/css/style.css`
 - `messenger-mvp/README.md`
 
-## Important Design Decisions
+## 중요한 설계 결정
 
-- Room identity and title are passed through URL query parameters.
-- Avoid shared global title state for chat rooms.
-- Keep selection mode and reply preview hidden by default.
-- Use `hidden` plus explicit CSS overrides for modal visibility.
+- 방 식별자와 제목은 URL 쿼리 파라미터로 전달한다.
+- 채팅방 제목을 위한 공유 전역 상태는 피한다.
+- 선택 모드와 답장 미리보기는 기본적으로 숨겨 둔다.
+- 모달 가시성은 `hidden`과 명시적인 CSS 오버라이드로 제어한다.
 
-## Important Caveats
+## 중요한 주의 사항
 
-- The repo has legacy files with broken/garbled encoded text in some places.
-- Several files were rewritten to stabilize behavior.
-- If future changes touch chat-room routing, always verify that titles remain room-specific.
-- If a modal appears by default, check:
+- 저장소에는 일부 깨지거나 깨진 인코딩 텍스트가 있는 레거시 파일이 있다.
+- 동작 안정화를 위해 여러 파일이 재작성되었다.
+- 앞으로 채팅방 라우팅을 건드릴 때는 제목이 방별로 분리되는지 항상 확인한다.
+- 모달이 기본적으로 보이면 다음을 확인한다.
   - HTML `hidden`
   - CSS `[hidden] { display: none; }`
-  - JS initialization/reset on page load and `pageshow`
+  - 페이지 로드 및 `pageshow` 시점의 JS 초기화/리셋
 
-## Recent Debug History
+## 최근 디버깅 기록
 
-- Fixed chat room popup visibility being incorrectly shown on page load.
-- Fixed reply preview being visible by default.
-- Fixed selection bar being visible by default.
-- Fixed room title leakage by moving room state to URL-based parameters.
-- Added centered title layout with ellipsis and count display.
+- 페이지 로드 시 채팅방 팝업이 잘못 표시되던 문제를 수정했다.
+- 답장 미리보기가 기본 표시되던 문제를 수정했다.
+- 선택 바가 기본 표시되던 문제를 수정했다.
+- 방 상태를 URL 기반 파라미터로 옮겨 제목 누출 문제를 수정했다.
+- 가운데 정렬 제목 레이아웃과 말줄임표, 인원 수 표시를 추가했다.
 
-## Next Likely Follow-Ups
+## 다음으로 할 가능성이 높은 작업
 
-- Reflect created room titles back into the chat list.
-- Replace the static room list with generated room entries.
-- Add persistence for created rooms if the MVP needs to simulate multiple sessions.
+- 생성된 방 제목을 채팅 목록에 반영한다.
+- 정적 방 목록을 생성형 방 항목으로 바꾼다.
+- MVP가 여러 세션을 흉내 내야 한다면 생성된 방을 저장하도록 한다.
 
+## 2026-06-27 작업 기록
+
+- 홈 화면의 친구 수와 채팅방 수가 정적 값과 맞지 않던 문제를 정리하고, 실제 저장 데이터 기준으로 표시되도록 연결했다.
+- 친구 목록이 보이지 않던 문제를 다시 잡고, 친구 렌더링 흐름을 별도 부트스트랩으로 분리해 복원했다.
+- 친구 목록 길게 누르기 메뉴를 정리해 정보 변경과 삭제 흐름이 동작하도록 맞췄고, 기존 삭제 버튼은 제거했다.
+- 친구 검색 기능을 추가하고, 친구 추가 시 프로필 이미지와 상태 메시지 입력까지 확장했다.
+- 친구 정보 변경 팝업의 저장 동작을 수정 흐름에 맞게 정리하고, 변경 버튼 클릭 시 중복 등록 경고가 뜨지 않도록 분기했다.
+- 채팅 메시지를 방별 `localStorage`에 저장하고, 날짜/보낸 사람/답장 정보를 포함하는 형식으로 정리했다.
+- 채팅방 목록에는 마지막 메시지 미리보기를 연결했고, `chat_room.html`의 초기 더미 메시지는 제거했다.
+- 리스트가 많아질 때 우측 스크롤이 보이도록 레이아웃과 표시 규칙을 조정했다.

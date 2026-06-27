@@ -1,63 +1,62 @@
 # AGENTS.md
 
-Read this file first before continuing work in this workspace.
+이 파일을 먼저 읽고 이 작업 공간에서 작업을 계속하세요.
 
-## Project
+## 프로젝트
 
-- Repository: `messenger-mvp`
-- Type: static HTML/CSS/JS chat MVP
-- Main entry points:
+- 저장소: `messenger-mvp`
+- 유형: 정적 HTML/CSS/JS 채팅 MVP
+- 주요 진입점:
   - `messenger-mvp/home.html`
   - `messenger-mvp/pages/chat_list.html`
   - `messenger-mvp/pages/chat_room.html`
   - `messenger-mvp/assets/js/app.js`
   - `messenger-mvp/assets/css/style.css`
 
-## Current Product Rules
+## 현재 제품 규칙
 
-- `chat_list.html` has a `+` button that opens a "create chat room" sheet.
-- A single selected friend creates a 1:1 chat room.
-- Multiple selected friends create a group chat room.
-- Group chat room titles are derived from the selected names if the user leaves the title blank.
-- `chat_room.html` title must be isolated per room and must not leak across other rooms.
-- Chat room titles are passed through the URL query string, not shared global state.
-- 1:1 room title = friend name.
-- Group room title = custom title when provided, otherwise comma-separated member names.
-- Group room title display in the header:
-  - centered
-  - ellipsis when too long
-  - member count shown on the same line, e.g. `(3명)`
-  - leave spacing between the back button and the menu button
+- `chat_list.html`에는 채팅방 생성 시트를 여는 `+` 버튼이 있다.
+- 친구 1명을 선택하면 1:1 채팅방이 생성된다.
+- 친구를 여러 명 선택하면 그룹 채팅방이 생성된다.
+- 제목을 비워두면 그룹 채팅방 제목은 선택된 이름을 기반으로 생성된다.
+- `chat_room.html`의 제목은 방별로 분리되어야 하며 다른 방으로 새어 나가면 안 된다.
+- 채팅방 제목은 공유 전역 상태가 아니라 URL 쿼리 문자열로 전달한다.
+- 1:1 방 제목은 친구 이름이다.
+- 그룹 방 제목은 사용자 지정 제목이 있으면 그것을 쓰고, 없으면 멤버 이름을 쉼표로 연결한다.
+- 그룹 방 제목의 헤더 표시는 다음 규칙을 따른다.
+  - 가운데 정렬
+  - 길면 말줄임표 처리
+  - 같은 줄에 멤버 수 표시, 예: `(3명)`
+  - 뒤로가기 버튼과 메뉴 버튼 사이 간격 유지
 
-## Chat Room Interaction Rules
+## 채팅방 상호작용 규칙
 
-- Long-press a message bubble to open the popup menu.
-- Reply preview appears only after choosing `Reply` from the popup.
-- Reply preview `X` closes the reply area and restores the normal composer.
-- `Save` and `Delete` switch into selection mode.
-- Selection mode shows left-side selection controls and a bottom action bar.
-- Outside selection mode, show the normal message input only.
+- 메시지 말풍선을 길게 눌러 팝업 메뉴를 연다.
+- 답장 미리보기는 팝업에서 `Reply`를 선택한 뒤에만 나타난다.
+- 답장 미리보기의 `X`를 누르면 답장 영역이 닫히고 일반 작성기가 다시 보인다.
+- `Save`와 `Delete`는 선택 모드로 전환한다.
+- 선택 모드에서는 왼쪽 선택 컨트롤과 하단 액션 바를 보여준다.
+- 선택 모드가 아니면 일반 메시지 입력만 보여준다.
 
-## Implementation Notes
+## 구현 메모
 
-- Use `apply_patch` for all file edits.
-- Do not revert unrelated user changes.
-- Keep edits ASCII where practical, but Korean UI text is acceptable in app files.
-- When updating UI behavior, verify both HTML structure and CSS visibility rules.
-- If a `hidden` element appears unexpectedly, check for CSS rules overriding `display`.
-- Prefer URL/query-state for room-specific data instead of `localStorage` for shared titles.
+- 파일 수정은 모두 `apply_patch`를 사용한다.
+- 사용자와 무관한 변경 사항은 되돌리지 않는다.
+- 가능한 한 ASCII로 유지하되, 앱 파일의 한국어 UI 텍스트는 허용한다.
+- UI 동작을 수정할 때는 HTML 구조와 CSS 표시 규칙을 함께 확인한다.
+- `hidden` 요소가 예상과 다르게 보이면 `display`를 덮는 CSS 규칙을 먼저 확인한다.
+- 방별 데이터는 `localStorage`보다 URL/쿼리 상태를 우선 사용한다.
 
-## Known Constraints
+## 알려진 제약
 
-- Some existing HTML files in this repo may contain legacy encoding artifacts.
-- Prefer minimal, targeted rewrites when a file becomes too inconsistent for partial patching.
-- Preserve the current MVP structure unless the user asks for a broader redesign.
+- 이 저장소의 일부 HTML 파일에는 레거시 인코딩 아티팩트가 있을 수 있다.
+- 부분 패치로 파일이 너무 복잡해지면, 최소 범위의 타깃 재작성으로 정리한다.
+- 더 넓은 리디자인 요청이 없으면 현재 MVP 구조를 유지한다.
 
-## Suggested Workflow for Future Work
+## 앞으로의 작업 흐름
 
-1. Read this file and `WORKLOG.md`.
-2. Inspect the relevant page and shared script/style files.
-3. Make the smallest coherent change.
-4. Run a syntax check on `assets/js/app.js` after JS edits.
-5. Verify title and modal behavior after any chat-flow change.
-
+1. 이 파일과 `WORKLOG.md`를 읽는다.
+2. 관련 페이지와 공용 스크립트/스타일 파일을 확인한다.
+3. 가장 작은 일관된 변경만 적용한다.
+4. JS를 수정했다면 `assets/js/app.js` 문법 검사를 실행한다.
+5. 채팅 흐름을 바꿨다면 제목과 모달 동작을 검증한다.

@@ -37,7 +37,7 @@ a {
 
 .phone {
   width: 390px;
-  min-height: 780px;
+  height: 780px;
   background: var(--phone);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -58,10 +58,16 @@ a {
 }
 
 .screen {
-  min-height: 732px;
+  height: calc(100% - 32px);
   background: var(--bg);
   position: relative;
   padding-bottom: 84px;
+}
+
+.screen:not(.auth) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .screen.auth {
@@ -138,6 +144,15 @@ a {
 
 .content {
   padding: 16px 18px;
+}
+
+.screen:not(.auth) .content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
 }
 
 .logo {
@@ -270,8 +285,38 @@ a {
 .list {
   background: #fff;
   border-radius: 20px;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border: 1px solid var(--line);
+  scrollbar-gutter: stable;
+  min-height: 0;
+  scrollbar-width: auto;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.screen:not(.auth) .content .list {
+  flex: 1;
+}
+
+.list::-webkit-scrollbar {
+  width: 14px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+  border: 2px solid #fff;
+}
+
+.chat-room-empty {
+  padding: 24px 18px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
 }
 
 .row {
@@ -303,6 +348,12 @@ a {
   height: 96px;
   border-radius: 32px;
   font-size: 48px;
+}
+
+.avatar.has-image {
+  background-size: cover;
+  background-position: center;
+  color: transparent;
 }
 
 .row-main {
@@ -878,6 +929,190 @@ body.selection-mode .chat-input {
 
 .chat-create-actions .btn {
   height: 46px;
+}
+
+.friend-add-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.32);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 25;
+  padding: 14px 12px 12px;
+  backdrop-filter: blur(2px);
+}
+
+.friend-add-overlay[hidden] {
+  display: none;
+}
+
+.friend-add-sheet {
+  width: 100%;
+  background: #fff;
+  border-radius: 24px 24px 18px 18px;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.26);
+  overflow: hidden;
+}
+
+.friend-add-handle {
+  width: 42px;
+  height: 5px;
+  border-radius: 999px;
+  background: #d7dce5;
+  margin: 10px auto 0;
+}
+
+.friend-add-header {
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.friend-add-title {
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.friend-add-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.friend-add-body {
+  padding: 12px 18px 0;
+  display: grid;
+  gap: 10px;
+}
+
+.friend-add-input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0 14px;
+  font-size: 14px;
+  background: #f8fafc;
+  outline: none;
+}
+
+.friend-add-input:focus {
+  background: #fff;
+  border-color: #cbd5e1;
+}
+
+.friend-row-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  padding: 0 0 1px;
+  border-bottom: 1px solid var(--line);
+}
+
+.friend-row-wrap.is-hidden {
+  display: none;
+}
+
+.friend-row-wrap:last-child {
+  border-bottom: 0;
+}
+
+.friend-row-link {
+  flex: 1;
+  border-bottom: 0;
+}
+
+.friend-delete-btn {
+  width: 60px;
+  border: 0;
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0 10px;
+  border-radius: 0 18px 18px 0;
+}
+
+.friend-delete-btn:active {
+  background: #fee2e2;
+}
+
+.friend-add-actions {
+  display: flex;
+  gap: 10px;
+  padding: 14px 12px 12px;
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+
+.friend-add-actions .btn {
+  height: 46px;
+  flex: 1;
+}
+
+.friend-menu-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.32);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 26;
+  padding: 14px 12px 12px;
+  backdrop-filter: blur(2px);
+}
+
+.friend-menu-overlay[hidden] {
+  display: none;
+}
+
+.friend-menu {
+  width: 100%;
+  background: #fff;
+  border-radius: 24px 24px 18px 18px;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.26);
+  overflow: hidden;
+}
+
+.friend-menu-header {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.friend-menu-name {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.friend-menu-item {
+  width: 100%;
+  height: 54px;
+  border: 0;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  padding: 0 18px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.friend-menu-item:last-child {
+  border-bottom: 0;
+}
+
+.friend-menu-item.danger {
+  color: #dc2626;
+}
+
+.friend-menu-item.cancel {
+  color: var(--muted);
+}
+
+.search.friend-search {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @keyframes message-menu-in {
