@@ -76,11 +76,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  gap: 12px;
+  padding: 0 16px;
   border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
   z-index: 3;
+  position: sticky;
 }
 
 .header h1 {
@@ -91,6 +93,35 @@ a {
 
 .header .small-title {
   font-size: 18px;
+}
+
+.chat-room-title {
+  position: absolute;
+  left: 72px;
+  right: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.chat-room-title .small-title {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.small-title-count {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 .icon-btn {

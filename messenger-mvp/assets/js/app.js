@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatCreateOverlay && chatCreateOpenButton) {
         const selectedNames = new Set();
 
+        const focusTitleInput = () => {
+            if (!chatCreateTitleInput || chatCreateTitleWrap?.hidden) {
+                return;
+            }
+            window.setTimeout(() => chatCreateTitleInput.focus(), 0);
+        };
+
+        const buildDefaultGroupTitle = (members) => members.join(', ');
+
         const syncChatCreateUI = () => {
             const count = selectedNames.size;
 
@@ -48,15 +57,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     chatCreateNext.disabled = false;
                     chatCreateNext.textContent = '채팅방 열기';
                 } else {
-                    chatCreateNext.disabled = !chatCreateTitleInput?.value.trim();
+                    chatCreateNext.disabled = false;
                     chatCreateNext.textContent = '채팅방 만들기';
                 }
             }
 
             chatCreateItems.forEach((item) => {
-                const name = item.dataset.name;
-                item.classList.toggle('is-selected', selectedNames.has(name));
+                item.classList.toggle('is-selected', selectedNames.has(item.dataset.name));
             });
+
+            if (count > 1) {
+                focusTitleInput();
+            }
         };
 
         const closeChatCreate = () => {
@@ -69,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             chatCreateOverlay.hidden = false;
             syncChatCreateUI();
+            focusTitleInput();
         });
 
         if (chatCreateCancel) {
@@ -104,18 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                localStorage.setItem('pendingChatMembers', JSON.stringify(members));
+                const params = new URLSearchParams();
+                params.set('members', members.join(','));
+
                 if (members.length > 1) {
-                    const title = chatCreateTitleInput?.value.trim();
-                    if (!title) {
-                        return;
-                    }
-                    localStorage.setItem('pendingChatRoomTitle', title);
-                } else {
-                    localStorage.removeItem('pendingChatRoomTitle');
+                    const title = chatCreateTitleInput?.value.trim() || buildDefaultGroupTitle(members);
+                    params.set('title', title);
                 }
 
-                window.location.href = 'chat_room.html';
+                window.location.href = `chat_room.html?${params.toString()}`;
             });
         }
 
@@ -123,17 +133,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const chatRoomTitleEl = document.querySelector('.small-title');
+    const chatRoomCountEl = document.querySelector('.small-title-count');
+    const roomParams = new URLSearchParams(window.location.search);
     if (chatRoomTitleEl) {
-        const members = JSON.parse(localStorage.getItem('pendingChatMembers') || '[]');
-        const roomTitle = localStorage.getItem('pendingChatRoomTitle') || '';
+        const members = (roomParams.get('members') || '').split(',').map((item) => item.trim()).filter(Boolean);
+        const roomTitle = roomParams.get('title') || '';
 
         if (members.length === 1) {
             chatRoomTitleEl.textContent = members[0];
+            if (chatRoomCountEl) {
+                chatRoomCountEl.hidden = true;
+                chatRoomCountEl.textContent = '';
+            }
             document.title = members[0];
         } else if (members.length > 1) {
-            const title = roomTitle || '그룹 채팅';
+            const title = roomTitle || members.join(', ');
             chatRoomTitleEl.textContent = title;
+            if (chatRoomCountEl) {
+                chatRoomCountEl.hidden = false;
+                chatRoomCountEl.textContent = `(${members.length}명)`;
+            }
             document.title = title;
+        } else {
+            if (chatRoomCountEl) {
+                chatRoomCountEl.hidden = true;
+                chatRoomCountEl.textContent = '';
+            }
         }
     }
 
@@ -360,9 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const remainingSavedMessages = savedMessages.filter((item) => !texts.includes(item));
                 localStorage.setItem('savedMessages', JSON.stringify(remainingSavedMessages));
 
-                selectedMessages.forEach((messageEl) => {
-                    messageEl.remove();
-                });
+                selectedMessages.forEach((messageEl) => messageEl.remove());
                 alert('선택한 메시지를 삭제했습니다.');
                 exitSelectionMode();
             }
