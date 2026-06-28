@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>마담뚜 업무앱 PLAN</title>
+        <style>
+            :root {
+                --bg: #f5f6f8;
+                --card: #ffffff;
+                --text: #202124;
+                --muted: #6b7280;
+                --line: #e5e7eb;
+                --yellow: #fee500;
+                --yellow-dark: #d6b900;
+                --blue: #3b82f6;
+                --gray: #6b7280;
+                --black: #111827;
+                --green: #16a34a;
+                --red: #ef4444;
+                --soft-yellow: #fff8cc;
+                --soft-blue: #eff6ff;
+                --soft-gray: #f3f4f6;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    "Noto Sans KR", Arial, sans-serif;
+                line-height: 1.65;
+            }
+
+            .page {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 28px 18px 80px;
+            }
+
+            .hero {
+                background: linear-gradient(135deg, #fee500 0%, #fff4a3 100%);
+                border-radius: 28px;
+                padding: 34px 28px;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            }
+
+            .hero-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 7px 12px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.7);
+                font-size: 14px;
+                font-weight: 700;
+            }
+
+            h1 {
+                margin: 18px 0 10px;
+                font-size: 34px;
+                line-height: 1.25;
+                letter-spacing: -0.04em;
+            }
+
+            .hero p {
+                max-width: 760px;
+                margin: 0;
+                font-size: 17px;
+                color: #3f3f46;
+            }
+
+            h2 {
+                margin: 46px 0 18px;
+                font-size: 25px;
+                letter-spacing: -0.03em;
+            }
+
+            h3 {
+                margin: 28px 0 12px;
+                font-size: 19px;
+                letter-spacing: -0.02em;
+            }
+
+            .section {
+                margin-top: 22px;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+
+            .grid.two {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card {
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 22px;
+                padding: 20px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            }
+
+            .card strong {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 17px;
+            }
+
+            .muted {
+                color: var(--muted);
+                font-size: 14px;
+            }
+
+            .tag-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 12px;
+            }
+
+            .tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                padding: 6px 10px;
+                border-radius: 999px;
+                background: var(--soft-gray);
+                font-size: 13px;
+                font-weight: 700;
+            }
+
+            .tag.yellow {
+                background: var(--soft-yellow);
+                color: #7c6500;
+            }
+
+            .tag.blue {
+                background: var(--soft-blue);
+                color: #1d4ed8;
+            }
+
+            .tag.dark {
+                background: #111827;
+                color: #ffffff;
+            }
+
+            .flow {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 10px;
+                padding: 20px;
+                background: #ffffff;
+                border: 1px solid var(--line);
+                border-radius: 22px;
+            }
+
+            .step {
+                padding: 12px 14px;
+                border-radius: 16px;
+                background: var(--soft-yellow);
+                font-weight: 800;
+                white-space: nowrap;
+            }
+
+            .arrow {
+                color: var(--muted);
+                font-weight: 900;
+            }
+
+            .table-wrap {
+                overflow-x: auto;
+                background: #ffffff;
+                border: 1px solid var(--line);
+                border-radius: 22px;
+            }
+
+            table {
+                width: 100%;
+                min-width: 720px;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+                padding: 14px 16px;
+                border-bottom: 1px solid var(--line);
+                text-align: left;
+                vertical-align: top;
+            }
+
+            th {
+                background: #fafafa;
+                font-size: 14px;
+            }
+
+            tr:last-child td {
+                border-bottom: 0;
+            }
+
+            .phone-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(260px, 1fr));
+                gap: 20px;
+                align-items: start;
+            }
+
+            .phone {
+                overflow: hidden;
+                min-height: 560px;
+                background: #ffffff;
+                border: 10px solid #111827;
+                border-radius: 34px;
+                box-shadow: 0 18px 34px rgba(0, 0, 0, 0.18);
+            }
+
+            .phone-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                min-height: 56px;
+                padding: 14px 16px;
+                background: var(--yellow);
+                font-weight: 900;
+            }
+
+            .phone-subheader {
+                padding: 12px 16px;
+                background: #fafafa;
+                border-bottom: 1px solid var(--line);
+                color: var(--muted);
+                font-size: 13px;
+            }
+
+            .phone-body {
+                padding: 14px;
+            }
+
+            .chat-list-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 4px;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .avatar {
+                display: inline-flex;
+                flex: 0 0 46px;
+                width: 46px;
+                height: 46px;
+                align-items: center;
+                justify-content: center;
+                border-radius: 16px;
+                background: var(--soft-yellow);
+                font-size: 22px;
+            }
+
+            .chat-title {
+                font-weight: 900;
+            }
+
+            .chat-preview {
+                color: var(--muted);
+                font-size: 13px;
+            }
+
+            .bubble-row {
+                display: flex;
+                gap: 8px;
+                margin: 14px 0;
+            }
+
+            .bubble-row.me {
+                justify-content: flex-end;
+            }
+
+            .bubble {
+                max-width: 82%;
+                padding: 12px 13px;
+                border-radius: 18px;
+                background: #f1f2f4;
+                font-size: 14px;
+            }
+
+            .bubble.me {
+                background: var(--yellow);
+            }
+
+            .customer-card {
+                margin-top: 10px;
+                padding: 14px;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 18px;
+            }
+
+            .customer-name {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 6px;
+                font-weight: 900;
+            }
+
+            .customer-meta {
+                color: #4b5563;
+                font-size: 14px;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                margin-top: 10px;
+                padding: 5px 9px;
+                border-radius: 999px;
+                font-size: 12px;
+                font-weight: 900;
+            }
+
+            .badge.pending {
+                background: var(--soft-yellow);
+                color: #7c6500;
+            }
+
+            .badge.progress {
+                background: var(--soft-blue);
+                color: #1d4ed8;
+            }
+
+            .badge.closed {
+                background: #e5e7eb;
+                color: #374151;
+            }
+
+            .button-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-top: 12px;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 42px;
+                padding: 11px 12px;
+                border: 0;
+                border-radius: 13px;
+                background: var(--yellow);
+                color: #111827;
+                font-size: 15px;
+                font-weight: 900;
+                text-decoration: none;
+            }
+
+            .btn.secondary {
+                background: #f3f4f6;
+            }
+
+            .btn.disabled {
+                background: #e5e7eb;
+                color: #9ca3af;
+            }
+
+            .fixed-text {
+                padding: 13px 14px;
+                border-radius: 15px;
+                background: #f9fafb;
+                border: 1px solid var(--line);
+                font-weight: 900;
+            }
+
+            .input-like {
+                width: 100%;
+                min-height: 46px;
+                margin-top: 8px;
+                padding: 12px 13px;
+                border: 1px solid var(--line);
+                border-radius: 14px;
+                background: #ffffff;
+                color: var(--muted);
+            }
+
+            .bottom-nav {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                border-top: 1px solid var(--line);
+                background: #ffffff;
+            }
+
+            .bottom-nav div {
+                padding: 10px 4px 12px;
+                text-align: center;
+                font-size: 12px;
+                font-weight: 800;
+            }
+
+            .bottom-nav span {
+                display: block;
+                font-size: 20px;
+            }
+
+            .note {
+                padding: 16px 18px;
+                border-left: 5px solid var(--yellow-dark);
+                border-radius: 16px;
+                background: #fffbea;
+            }
+
+            .file-list {
+                display: grid;
+                gap: 10px;
+                margin-top: 12px;
+            }
+
+            .file-item {
+                padding: 12px 14px;
+                border: 1px solid var(--line);
+                border-radius: 14px;
+                background: #ffffff;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                    "Liberation Mono", monospace;
+                font-size: 13px;
+            }
+
+            @media (max-width: 920px) {
+                .grid,
+                .grid.two,
+                .phone-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                h1 {
+                    font-size: 29px;
+                }
+
+                .flow {
+                    display: grid;
+                }
+
+                .arrow {
+                    display: none;
+                }
+            }
+
+
+        /* v4: 입력 가능 필드 / 읽기 전용 필드 구분 */
+        input.form-input,
+        select.form-input,
+        textarea.form-textarea {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 13px;
+            border: 2px solid #d9d9d9;
+            border-radius: 14px;
+            background: #ffffff;
+            color: var(--text);
+            font: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        input.form-input:focus,
+        select.form-input:focus,
+        textarea.form-textarea:focus {
+            border-color: var(--yellow-deep);
+            box-shadow: 0 0 0 3px rgba(254, 229, 0, 0.35);
+        }
+
+        textarea.form-textarea {
+            min-height: 96px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .readonly-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #555555;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .fixed-text,
+        .readonly-field {
+            padding: 13px 14px;
+            border: 1px solid #eeeeee;
+            border-radius: 14px;
+            background: #f8f8f8;
+            color: #333333;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.45;
+        }
+
+        .field-help {
+            margin-top: 7px;
+            color: #888888;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* v6: 하나의 가로형 고객카드 */
+        .customer-card {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .customer-card.compact {
+            width: min(348px, calc(100vw - 54px));
+            padding: 10px;
+            border-radius: 16px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .customer-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .photo-small {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 40px;
+            width: 40px;
+            height: 51px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #f3f4f6;
+            color: #777777;
+            font-size: 22px;
+            box-shadow: none;
+        }
+
+        .customer-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        .customer-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .customer-name {
+            overflow: hidden;
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .customer-meta {
+            overflow: hidden;
+            margin-top: 3px;
+            color: #555555;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.35;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .customer-note {
+            display: none;
+        }
+
+        .status-row {
+            display: flex;
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+            gap: 4px;
+            margin-top: 0;
+        }
+
+        .status-row .badge {
+            min-height: 22px;
+            padding: 3px 6px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .customer-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .customer-actions .btn {
+            min-height: 36px;
+            padding: 0 10px;
+            font-size: 14px;
+        }
+
+        .request-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding: 4px;
+            border-radius: 16px;
+            background: #e9e9e9;
+        }
+
+        .request-toggle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .request-tabs label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            border-radius: 13px;
+            color: #666666;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        #tab-received:checked ~ .request-tabs label[for="tab-received"],
+        #tab-sent:checked ~ .request-tabs label[for="tab-sent"] {
+            background: #ffffff;
+            color: #111111;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .request-panel {
+            display: none;
+        }
+
+        #tab-received:checked ~ .received-panel,
+        #tab-sent:checked ~ .sent-panel {
+            display: block;
+        }
+
+
+
+        /* v8: 참여 요청 용어 / 고객카드 버튼 축소 및 사진 확대 */
+        .customer-card {
+            padding: 10px 12px;
+        }
+
+        .customer-card.compact {
+            width: min(348px, calc(100vw - 54px));
+            padding: 10px 12px;
+        }
+
+        .customer-card-top {
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .photo-small {
+            flex: 0 0 50px;
+            width: 50px;
+            height: 64px;
+            border-radius: 9px;
+            font-size: 25px;
+        }
+
+        .customer-title-row {
+            min-height: 24px;
+        }
+
+        .customer-name {
+            font-size: 17px;
+        }
+
+        .customer-meta {
+            margin-top: 3px;
+            font-size: 14px;
+        }
+
+        .status-row .badge {
+            min-height: 20px;
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 999px;
+        }
+
+        .customer-actions {
+            display: flex;
+            justify-content: flex-start;
+            gap: 6px;
+            margin-top: 8px;
+            margin-left: 62px;
+        }
+
+        .customer-actions .btn {
+            width: auto;
+            min-height: 30px;
+            padding: 0 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        
+
+        /* v9: 고객카드 버튼 확장 / 채팅 입력창 + 버튼 / 1:1 진행상태 상단 표시 */
+        .customer-card.compact {
+            width: min(360px, calc(100vw - 44px));
+            padding: 12px;
+        }
+
+        .customer-card-top {
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .photo-small {
+            flex: 0 0 64px;
+            width: 64px;
+            height: 82px;
+            border-radius: 11px;
+            font-size: 32px;
+        }
+
+        .customer-name {
+            font-size: 18px;
+            line-height: 1.25;
+        }
+
+        .customer-meta {
+            margin-top: 4px;
+            font-size: 14px;
+            line-height: 1.25;
+        }
+
+        .customer-title-row {
+            min-height: 27px;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-width: 124px;
+        }
+
+        .status-row .badge {
+            min-height: 20px;
+            padding: 2px 6px;
+            font-size: 10px;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .customer-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            margin-left: 78px;
+        }
+
+        .customer-actions .btn {
+            flex: 1;
+            min-height: 36px;
+            padding: 0 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .chat-input-inner.kakao {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+        }
+
+        .attach-plus {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 36px;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #d6d6d6;
+            border-radius: 50%;
+            background: #ffffff;
+            color: #333333;
+            font-size: 25px;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .chat-input-text.input-pill {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-height: 38px;
+            padding: 0 14px;
+            border-radius: 20px;
+            background: #ffffff;
+            color: #9a9a9a;
+            font-size: 15px;
+        }
+
+        .send-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 42px;
+            min-height: 36px;
+            border-radius: 18px;
+            background: var(--yellow);
+            color: #111111;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .share-fab {
+            position: absolute;
+            right: 18px;
+            bottom: 86px;
+            z-index: 20;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--yellow);
+            color: #111111;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 54px;
+            min-height: 28px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        
+
+        /* v11: 확정 규칙 - 고객카드 단일 가로형 / 상태값 / 1:1 목록 표시 */
+        .customer-card.compact {
+            display: grid !important;
+            grid-template-columns: 76px minmax(0, 1fr) !important;
+            gap: 10px 12px !important;
+            width: 100% !important;
+            padding: 10px !important;
+            border: 1px solid #e4e4e4 !important;
+            border-radius: 16px !important;
+            background: #ffffff !important;
+            box-shadow: none !important;
+        }
+
+        .customer-card.compact .customer-card-top {
+            display: contents !important;
+        }
+
+        .customer-card.compact .photo-small {
+            grid-column: 1 !important;
+            grid-row: 1 / span 2 !important;
+            width: 76px !important;
+            height: 98px !important;
+            margin: 0 !important;
+            border-radius: 12px !important;
+            background: #f2f2f2 !important;
+            font-size: 35px !important;
+        }
+
+        .customer-card.compact .customer-info {
+            grid-column: 2 !important;
+            min-width: 0 !important;
+            padding-top: 2px !important;
+        }
+
+        .customer-title-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 8px !important;
+            min-width: 0 !important;
+        }
+
+        .customer-name {
+            flex: 0 0 auto !important;
+            font-size: 17px !important;
+            font-weight: 900 !important;
+            line-height: 1.2 !important;
+        }
+
+        .status-row {
+            display: inline-flex !important;
+            justify-content: flex-end !important;
+            flex-wrap: nowrap !important;
+            gap: 4px !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+        }
+
+        .customer-card.compact .badge {
+            padding: 3px 6px !important;
+            border-radius: 999px !important;
+            font-size: 10px !important;
+            font-weight: 900 !important;
+            white-space: nowrap !important;
+        }
+
+        .customer-meta {
+            margin-top: 6px !important;
+            color: #666666 !important;
+            font-size: 14px !important;
+            line-height: 1.35 !important;
+        }
+
+        .customer-actions {
+            grid-column: 2 !important;
+            display: flex !important;
+            align-items: stretch !important;
+            gap: 7px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .customer-actions .btn {
+            flex: 1 1 0 !important;
+            min-height: 38px !important;
+            padding: 0 8px !important;
+            border-radius: 12px !important;
+            font-size: 14px !important;
+            font-weight: 900 !important;
+        }
+
+        .chat-status-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 5px;
+            min-width: 68px;
+        }
+
+        .badge.status-progress {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge.status-ending {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge.status-ended {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .private-title-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .private-title-wrap .header-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        
+
+        /* v12: 고객카드 가로폭 확대(단체방은 조금 더 넓게) + 카카오톡형 입력창 */
+        .bubble-row.me {
+            justify-content: flex-end !important;
+        }
+
+        .bubble-row.me .bubble {
+            margin-left: auto !important;
+            margin-right: 0 !important;
+        }
+
+        .bubble-row:not(.me) .bubble:not(.customer-bubble) {
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+
+        .bubble.customer-bubble {
+            width: calc(100vw - 48px) !important;
+            max-width: 100% !important;
+        }
+
+        .customer-card,
+        .customer-card.compact {
+            display: grid !important;
+            grid-template-columns: 92px minmax(0, 1fr) !important;
+            gap: 10px 14px !important;
+            width: 100% !important;
+            padding: 12px !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 17px !important;
+            background: #ffffff !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+        }
+
+        .customer-card .customer-card-top,
+        .customer-card.compact .customer-card-top {
+            display: contents !important;
+        }
+
+        .customer-card .photo-small,
+        .customer-card.compact .photo-small {
+            grid-column: 1 !important;
+            grid-row: 1 / span 2 !important;
+            width: 92px !important;
+            height: 118px !important;
+            margin: 0 !important;
+            border-radius: 13px !important;
+            background: #f3f4f6 !important;
+            font-size: 40px !important;
+        }
+
+        .customer-card .customer-info,
+        .customer-card.compact .customer-info {
+            grid-column: 2 !important;
+            min-width: 0 !important;
+            padding-top: 4px !important;
+        }
+
+        .customer-card .customer-actions,
+        .customer-card.compact .customer-actions {
+            grid-column: 2 !important;
+            display: flex !important;
+            align-items: stretch !important;
+            gap: 8px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .customer-card .customer-actions .btn,
+        .customer-card.compact .customer-actions .btn {
+            flex: 1 1 0 !important;
+            min-height: 44px !important;
+            padding: 0 8px !important;
+            border-radius: 12px !important;
+            font-size: 14px !important;
+            font-weight: 900 !important;
+        }
+
+        .customer-card .customer-title-row,
+        .customer-card.compact .customer-title-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 8px !important;
+            min-width: 0 !important;
+        }
+
+        .customer-card .customer-name,
+        .customer-card.compact .customer-name {
+            flex: 0 1 auto !important;
+            overflow: hidden !important;
+            font-size: 17px !important;
+            font-weight: 900 !important;
+            line-height: 1.2 !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .customer-card .status-row,
+        .customer-card.compact .status-row {
+            display: inline-flex !important;
+            justify-content: flex-end !important;
+            flex-wrap: nowrap !important;
+            gap: 4px !important;
+            margin: 0 !important;
+            min-width: 0 !important;
+        }
+
+        .customer-card .badge,
+        .customer-card.compact .badge {
+            min-height: 20px !important;
+            padding: 3px 6px !important;
+            border-radius: 999px !important;
+            font-size: 10px !important;
+            font-weight: 900 !important;
+            line-height: 1.1 !important;
+            white-space: nowrap !important;
+        }
+
+        .customer-card .customer-meta,
+        .customer-card.compact .customer-meta {
+            margin-top: 8px !important;
+            color: #666666 !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            line-height: 1.35 !important;
+        }
+
+        .kakao-message-box {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 46px;
+            padding: 5px 6px;
+            border: 1px solid #dddddd;
+            border-radius: 24px;
+            background: #ffffff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        .kakao-attach-inside,
+        .kakao-send-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 36px;
+            width: 36px;
+            height: 36px;
+            border: 0;
+            border-radius: 50%;
+            font-size: 25px;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .kakao-attach-inside {
+            background: transparent;
+            color: #555555;
+        }
+
+        .kakao-text-input {
+            flex: 1;
+            min-width: 0;
+            height: 36px;
+            border: 0;
+            outline: none;
+            background: transparent;
+            color: #222222;
+            font-size: 15px;
+        }
+
+        .kakao-text-input::placeholder {
+            color: #999999;
+        }
+
+        .kakao-send-arrow {
+            background: var(--yellow);
+            color: #111111;
+            font-size: 19px;
+            font-weight: 900;
+            transform: rotate(-35deg);
+        }
+
+        .chat-input-inner.kakao {
+            padding: 0 !important;
+        }
+
+        
+
+        /* v15: 단체방 고객카드 폭 확대 + 화면 밖 이탈 방지 */
+        .content.chat-room {
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+        }
+
+        .bubble-row {
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .bubble-row > div {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .bubble {
+            box-sizing: border-box !important;
+            max-width: 78% !important;
+            overflow: visible !important;
+            white-space: normal !important;
+            overflow-wrap: break-word !important;
+            word-break: keep-all !important;
+        }
+
+        .bubble-row.me .bubble {
+            max-width: 78% !important;
+        }
+
+        .bubble.customer-bubble {
+            width: 100% !important;
+            max-width: min(100%, calc(100vw - 44px)) !important;
+            box-sizing: border-box !important;
+            overflow: visible !important;
+        }
+
+        .bubble.customer-bubble .message-text {
+            box-sizing: border-box !important;
+            max-width: 100% !important;
+            overflow-wrap: break-word !important;
+        }
+
+        .customer-card,
+        .customer-card.compact {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+        }
+
+        .customer-card .customer-info,
+        .customer-card.compact .customer-info {
+            min-width: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .customer-card .status-row,
+        .customer-card.compact .status-row {
+            flex: 0 1 auto !important;
+            max-width: 58% !important;
+            overflow: hidden !important;
+        }
+
+        .customer-card .badge,
+        .customer-card.compact .badge {
+            flex: 0 1 auto !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .customer-card .customer-actions,
+        .customer-card.compact .customer-actions {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        </style>
+    </head>
+    <body>
+        <main class="page">
+            <section class="hero">
+                <div class="hero-badge">💬 카카오톡형 중매 협업앱</div>
+                <h1>마담뚜 업무앱 PLAN</h1>
+                <p>
+                    50~60대 여성 중매인이 기존 카카오톡 단체방에서 하던 업무를 그대로 유지하면서,
+                    고객카드·소개하기·소개방·참여요청 관리만 추가한 모바일웹 기획안입니다.
+                </p>
+            </section>
+
+            <section class="section">
+                <h2>1. 서비스 방향</h2>
+                <div class="grid">
+                    <article class="card">
+                        <strong>새로운 CRM이 아니다</strong>
+                        <p class="muted">
+                            복잡한 관리자 시스템이 아니라, 카카오톡처럼 보이고 카카오톡처럼 쓰는
+                            협업 메신저를 목표로 한다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>채팅방이 중심이다</strong>
+                        <p class="muted">
+                            고객은 채팅방 안에서 공유되고, 소개하기가 발생하면 요청함과 소개방으로
+                            자연스럽게 분리된다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>버튼은 동사형으로</strong>
+                        <p class="muted">
+                            50~60대 사용자를 위해 공유하기, 소개하기, 수락하기, 거절하기처럼
+                            행동이 바로 보이는 표현을 사용한다.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>2. 최종 용어</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>기존 표현</th>
+                                <th>최종 표현</th>
+                                <th>이유</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>고객공유 / 고객 올리기</td>
+                                <td><strong>공유하기</strong></td>
+                                <td>카카오톡의 전달하기, 보내기와 비슷한 동사형 표현</td>
+                            </tr>
+                            <tr>
+                                <td>소개요청 / 중매요청</td>
+                                <td><strong>소개하기</strong></td>
+                                <td>상대 고객에게 내 고객을 소개한다는 의미가 직관적</td>
+                            </tr>
+                            <tr>
+                                <td>보기 / 자세히</td>
+                                <td><strong>상세정보</strong></td>
+                                <td>고객 정보를 더 자세히 본다는 의미가 명확함</td>
+                            </tr>
+                            <tr>
+                                <td>승인</td>
+                                <td><strong>수락하기</strong></td>
+                                <td>카카오톡 초대 수락과 비슷한 사용자 언어</td>
+                            </tr>
+                            <tr>
+                                <td>1:1 채팅</td>
+                                <td><strong>소개방</strong></td>
+                                <td>실제 소개 업무가 진행되는 별도 대화방</td>
+                            </tr>
+                            <tr>
+                                <td>Match Case</td>
+                                <td><strong>소개 진행</strong></td>
+                                <td>업무 용어를 줄이고 쉬운 표현 사용</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>3. 핵심 업무 흐름</h2>
+                <div class="flow">
+                    <div class="step">채팅방</div>
+                    <div class="arrow">→</div>
+                    <div class="step">공유하기</div>
+                    <div class="arrow">→</div>
+                    <div class="step">고객카드 노출</div>
+                    <div class="arrow">→</div>
+                    <div class="step">소개하기</div>
+                    <div class="arrow">→</div>
+                    <div class="step">요청함 등록</div>
+                    <div class="arrow">→</div>
+                    <div class="step">수락하기</div>
+                    <div class="arrow">→</div>
+                    <div class="step">소개방 생성</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>4. 하단 메뉴</h2>
+                <div class="note">
+                    하단 메뉴는 <strong>채팅 · 내 고객 · 요청 · 더보기</strong> 4개로 단순화한다.
+                    1:1 소개방은 별도 하단 메뉴로 두지 않고, <strong>요청</strong> 화면이나
+                    채팅방 내부의 <strong>소개방</strong> 버튼을 통해 들어가도록 한다.
+                </div>
+                <div class="grid">
+                    <article class="card">
+                        <strong>💬 채팅</strong>
+                        <p class="muted">서울 VIP방, 강남 전문직방 등 단체방 목록</p>
+                    </article>
+                    <article class="card">
+                        <strong>👤 내 고객</strong>
+                        <p class="muted">내가 보유한 고객 목록, 상세정보, 공유하기</p>
+                    </article>
+                    <article class="card">
+                        <strong>📨 요청</strong>
+                        <p class="muted">받은 요청, 보낸 요청, 수락·거절 대기 목록</p>
+                    </article>
+                    <article class="card">
+                        <strong>☰ 더보기</strong>
+                        <p class="muted">참여 요청, 회원 초대, 설정, 공지, 내 정보</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>5. 고객카드 상태 규칙</h2>
+                <div class="note">
+                    고객카드는 단순하게 관리한다. 기본 상태는 별도 표시를 하지 않고,
+                    특별한 경우에만 <strong>고객카드에는 <strong>상태(진행중/종료)</strong>와 <strong>소개요청 N건</strong>을 항상 함께 표시한다.
+                    단, <strong>종료</strong> 상태에서만 소개하기 버튼을 비활성화한다.
+                </div>
+                <div class="phone-grid section">
+                    <article class="phone">
+                        <div class="phone-header">기본 고객카드 <span>💬</span></div>
+                        <div class="phone-body">
+                            <div class="bubble-row">
+                                <div class="bubble">
+                                    김대표<br />서울 거주 약사 여성입니다.
+                                    <div class="customer-card">
+                                        <div class="customer-name">
+                                            👩 김영희
+                                        </div>
+                                        <div class="customer-meta">34세 · 서울 · 약사</div>
+                                        <span class="badge progress">진행중</span>
+                                        <span class="badge pending">소개요청 5건</span>
+                                        <div class="button-row">
+                                            <a class="btn secondary" href="#">상세정보</a>
+                                            <a class="btn" href="#">소개하기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="phone">
+                        <div class="phone-header">진행중 고객카드 <span>🔵</span></div>
+                        <div class="phone-body">
+                            <div class="bubble-row">
+                                <div class="bubble">
+                                    김대표<br />현재 소개 진행 중입니다.
+                                    <div class="customer-card">
+                                        <div class="customer-name">
+                                            👩 김영희
+                                        </div>
+                                        <div class="customer-meta">34세 · 서울 · 약사</div>
+                                        <span class="badge progress">진행중</span>
+                                        <span class="badge pending">소개요청 5건</span>
+                                        <div class="button-row">
+                                            <a class="btn secondary" href="#">상세정보</a>
+                                            <a class="btn" href="#">소개하기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="phone">
+                        <div class="phone-header">종료 고객카드 <span>⚫</span></div>
+                        <div class="phone-body">
+                            <div class="bubble-row">
+                                <div class="bubble">
+                                    김대표<br />소개가 종료된 고객입니다.
+                                    <div class="customer-card">
+                                        <div class="customer-name">
+                                            👩 김영희
+                                        </div>
+                                        <div class="customer-meta">34세 · 서울 · 약사</div>
+                                        <span class="badge closed">종료</span>
+                                        <span class="badge pending">소개요청 5건</span>
+                                        <div class="button-row">
+                                            <a class="btn secondary" href="#">상세정보</a>
+                                            <a class="btn disabled" href="#">소개하기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>6. 공유하기 화면 규칙</h2>
+                <div class="grid two">
+                    <article class="card">
+                        <strong>채팅방 안에서 공유하기</strong>
+                        <p class="muted">
+                            이미 현재 채팅방이 정해져 있으므로, 공유하기 화면의 올릴 채팅방은
+                            선택박스가 아니라 고정 텍스트로 표시한다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>내 고객에서 공유하기</strong>
+                        <p class="muted">
+                            어느 채팅방에 올릴지 정해져 있지 않으므로, 채팅방 선택이 필요하다.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="phone-grid section">
+                    <article class="phone">
+                        <div class="phone-header">공유하기 <span>📤</span></div>
+                        <div class="phone-subheader">채팅방 안에서 진입한 경우</div>
+                        <div class="phone-body">
+                            <h3>올릴 채팅방</h3>
+                            <div class="fixed-text">서울 VIP방</div>
+
+                            <h3>내 고객 선택</h3>
+                            <div class="input-like">김영희 · 34세 · 서울 · 약사</div>
+                            <div class="input-like">이수진 · 32세 · 경기 · 회계사</div>
+
+                            <h3>전달할 말</h3>
+                            <div class="input-like">
+                                서울 거주 약사 여성입니다. 전문직 남성 선호합니다.
+                            </div>
+
+                            <a class="btn" href="#" style="width: 100%; margin-top: 16px;">
+                                공유하기
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="phone">
+                        <div class="phone-header">공유하기 <span>👤</span></div>
+                        <div class="phone-subheader">내 고객에서 진입한 경우</div>
+                        <div class="phone-body">
+                            <h3>올릴 채팅방 선택</h3>
+                            <div class="input-like">서울 VIP방</div>
+                            <div class="input-like">강남 전문직방</div>
+                            <div class="input-like">재혼 모임방</div>
+
+                            <h3>공유할 고객</h3>
+                            <div class="fixed-text">김영희 · 34세 · 서울 · 약사</div>
+
+                            <h3>전달할 말</h3>
+                            <div class="input-like">
+                                좋은 인연 찾고 있습니다.
+                            </div>
+
+                            <a class="btn" href="#" style="width: 100%; margin-top: 16px;">
+                                공유하기
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>7. 소개하기 화면 규칙</h2>
+                <div class="note">
+                    채팅방의 고객카드에서 소개하기를 누른 경우, 상대 고객은 이미 선택되어 있다.
+                    따라서 소개하기 화면에서는 상대 고객을 선택하게 하지 않고 고정 텍스트 카드로 보여준다.
+                </div>
+
+                <div class="phone-grid section">
+                    <article class="phone">
+                        <div class="phone-header">소개하기 <span>❤️</span></div>
+                        <div class="phone-subheader">서울 VIP방 고객카드에서 진입</div>
+                        <div class="phone-body">
+                            <h3>상대 고객</h3>
+                            <div class="fixed-text">김영희 · 34세 · 서울 · 약사</div>
+
+                            <h3>내 고객 선택</h3>
+                            <div class="input-like">박철수 · 38세 · 서울 · 변호사</div>
+                            <div class="input-like">이민호 · 40세 · 경기 · 사업가</div>
+
+                            <h3>전달할 말</h3>
+                            <div class="input-like">
+                                조건이 잘 맞을 것 같습니다. 검토 부탁드립니다.
+                            </div>
+
+                            <a class="btn" href="#" style="width: 100%; margin-top: 16px;">
+                                소개하기
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="phone">
+                        <div class="phone-header">요청함 등록 <span>📩</span></div>
+                        <div class="phone-body">
+                            <div class="chat-list-item">
+                                <div class="avatar">👩</div>
+                                <div>
+                                    <div class="chat-title">김대표에게 소개하기</div>
+                                    <div class="chat-preview">
+                                        상대 고객: 김영희 / 내 고객: 박철수
+                                    </div>
+                                    <span class="badge pending">대기중</span>
+                                </div>
+                            </div>
+                            <div class="chat-list-item">
+                                <div class="avatar">📌</div>
+                                <div>
+                                    <div class="chat-title">김영희 고객카드</div>
+                                    <div class="chat-preview">
+                                        소개요청 5건으로 숫자만 갱신된다.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>8. 채팅방 안 표현 방식</h2>
+                <div class="grid two">
+                    <article class="card">
+                        <strong>채팅 메시지를 도배하지 않는다</strong>
+                        <p class="muted">
+                            누군가 소개하기를 눌렀다고 단체방에 “소개 요청했습니다” 메시지를
+                            계속 올리지 않는다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>고객카드 숫자만 갱신한다</strong>
+                        <p class="muted">
+                            단체방에는 고객카드의 소개요청 건수만 증가시켜 현재 관심도를 보여준다.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="flow section">
+                    <div class="step">김대표 공유</div>
+                    <div class="arrow">→</div>
+                    <div class="step">박대표 소개하기</div>
+                    <div class="arrow">→</div>
+                    <div class="step">양쪽 요청함 등록</div>
+                    <div class="arrow">→</div>
+                    <div class="step">카드: 소개요청 5건</div>
+                    <div class="arrow">→</div>
+                    <div class="step">김대표 수락</div>
+                    <div class="arrow">→</div>
+                    <div class="step">소개방 생성</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>9. 비공개 채팅방과 참여 요청</h2>
+                <div class="note">
+                    만들어진 채팅방은 기본적으로 비공개다. 새로운 회원이 들어오려면 반드시
+                    방장 수락이 필요하다. 참여 요청은 한 화면에서 통합 관리한다.
+                </div>
+
+                <div class="grid">
+                    <article class="card">
+                        <strong>직접 참여 요청</strong>
+                        <p class="muted">
+                            참여하려는 회원이 방장에게 직접 서울 VIP방 참여를 요청한다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>참여회원의 추천</strong>
+                        <p class="muted">
+                            기존 참여회원이 “이 회원을 받아주세요”라고 방장에게 추천한다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>방장 직접 초대</strong>
+                        <p class="muted">
+                            방장이 회원을 검색해서 직접 초대하고, 상대가 참여하기를 누르면 입장한다.
+                        </p>
+                    </article>
+                </div>
+
+                <h3>권한 규칙</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>기능</th>
+                                <th>일반회원</th>
+                                <th>참여회원</th>
+                                <th>방장</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>참여 요청</td>
+                                <td>가능</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>회원 추천</td>
+                                <td>-</td>
+                                <td>가능</td>
+                                <td>가능</td>
+                            </tr>
+                            <tr>
+                                <td>회원 초대</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>가능</td>
+                            </tr>
+                            <tr>
+                                <td>참여 요청 수락/거절</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>가능</td>
+                            </tr>
+                            <tr>
+                                <td>회원 내보내기</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>가능</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>10. 참여 요청 관리 화면</h2>
+                <div class="phone-grid">
+                    <article class="phone">
+                        <div class="phone-header">참여 요청 <span>🔐</span></div>
+                        <div class="phone-subheader">방장만 보이는 화면</div>
+                        <div class="phone-body">
+                            <div class="customer-card">
+                                <div class="customer-name">이대표</div>
+                                <div class="customer-meta">직접 참여 요청 · 서울 · 재혼 전문</div>
+                                <div class="button-row">
+                                    <a class="btn" href="#">수락하기</a>
+                                    <a class="btn secondary" href="#">거절하기</a>
+                                </div>
+                            </div>
+
+                            <div class="customer-card">
+                                <div class="customer-name">최대표</div>
+                                <div class="customer-meta">박대표 추천 · 강남 · 전문직</div>
+                                <div class="button-row">
+                                    <a class="btn" href="#">수락하기</a>
+                                    <a class="btn secondary" href="#">거절하기</a>
+                                </div>
+                            </div>
+
+                            <div class="customer-card">
+                                <div class="customer-name">내가 보낸 초대</div>
+                                <div class="customer-meta">정대표 · 대기중</div>
+                                <a class="btn secondary" href="#" style="width: 100%; margin-top: 12px;">
+                                    초대 취소
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="phone">
+                        <div class="phone-header">회원 초대 <span>➕</span></div>
+                        <div class="phone-subheader">방장 전용</div>
+                        <div class="phone-body">
+                            <h3>초대할 방</h3>
+                            <div class="fixed-text">서울 VIP방</div>
+
+                            <h3>회원 검색</h3>
+                            <div class="input-like">이대표 · 부산 · 재혼</div>
+                            <div class="input-like">정대표 · 서울 · 전문직</div>
+                            <div class="input-like">최대표 · 경기 · 초혼</div>
+
+                            <h3>초대 메시지</h3>
+                            <div class="input-like">서울 VIP방에 초대합니다.</div>
+
+                            <a class="btn" href="#" style="width: 100%; margin-top: 16px;">
+                                초대 보내기
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="phone">
+                        <div class="phone-header">초대 받음 <span>📩</span></div>
+                        <div class="phone-body">
+                            <div class="customer-card">
+                                <div class="customer-name">서울 VIP방</div>
+                                <div class="customer-meta">
+                                    김대표님이 초대했습니다.<br />비공개 채팅방 · 참여회원 12명
+                                </div>
+                                <div class="button-row">
+                                    <a class="btn" href="#">참여하기</a>
+                                    <a class="btn secondary" href="#">거절하기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>11. 필요한 화면 목록</h2>
+                <div class="file-list">
+                    <div class="file-item">01_login.html - 로그인</div>
+                    <div class="file-item">02_home.html - 채팅방 목록</div>
+                    <div class="file-item">03_new_chat.html - 채팅방 만들기</div>
+                    <div class="file-item">04_customer_add.html - 고객 추가</div>
+                    <div class="file-item">05_customer_list.html - 내 고객</div>
+                    <div class="file-item">06_customer_detail.html - 고객 상세정보</div>
+                    <div class="file-item">07_group_chat.html - 단체 채팅방</div>
+                    <div class="file-item">08_share_customer.html - 공유하기</div>
+                    <div class="file-item">09_request_list.html - 요청함</div>
+                    <div class="file-item">10_request_create.html - 소개하기</div>
+                    <div class="file-item">11_private_chat.html - 소개방</div>
+                    <div class="file-item">12_progress_list.html - 소개 진행 목록</div>
+                    <div class="file-item">13_notification.html - 알림</div>
+                    <div class="file-item">14_more.html - 더보기</div>
+                    <div class="file-item">15_request_receive.html - 받은 소개 요청 상세</div>
+                    <div class="file-item">16_settings.html - 설정</div>
+                    <div class="file-item">17_room_info.html - 채팅방 정보</div>
+                    <div class="file-item">18_join_request.html - 참여 요청</div>
+                    <div class="file-item">19_member_recommend.html - 회원 추천</div>
+                    <div class="file-item">20_join_request_manage.html - 참여 요청 관리</div>
+                    <div class="file-item">21_owner_invite.html - 방장 회원 초대</div>
+                    <div class="file-item">22_received_invite.html - 초대 받음</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>12. 개발 시 우선 적용 규칙</h2>
+                <div class="grid two">
+                    <article class="card">
+                        <strong>화면 이동만 구현</strong>
+                        <p class="muted">
+                            초기 HTML 프로토타입에서는 저장, 등록, 승인 로직을 만들지 않고
+                            버튼 클릭 시 해당 화면으로 이동하는 것만 구현한다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>소스 가독성 유지</strong>
+                        <p class="muted">
+                            각 HTML은 들여쓰기와 개행을 적용해 초보자도 구조를 쉽게 확인할 수
+                            있도록 작성한다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>50~60대 기준 UI</strong>
+                        <p class="muted">
+                            큰 글자, 큰 버튼, 4개 이하 하단 메뉴(채팅·내 고객·요청·더보기), 복잡한 용어 제거를 기본 원칙으로 한다.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <strong>카카오톡과 유사한 사용감</strong>
+                        <p class="muted">
+                            사용자가 “카톡이네, 그런데 고객카드와 소개방이 있네”라고 느끼게 하는 것이 목표다.
+                        </p>
+                    </article>
+                </div>
+            </section>
+        
+                <section class="card">
+                    <h2>v9 화면 수정 규칙</h2>
+                    <ul>
+                        <li>고객카드의 <strong>상세정보 / 소개하기</strong> 버튼은 고객 이름 시작 위치와 같은 라인에서 시작하고, 남은 가로 폭을 활용해 넓게 표시한다.</li>
+                        <li>단체방 하단에는 고객 공유용 둥근 <strong>+</strong> 버튼을 대화 영역에 배치한다.</li>
+                        <li>단체방과 1:1 대화방 입력창의 <strong>+</strong> 버튼은 사진 또는 파일 선택 용도로 사용한다.</li>
+                        <li>1:1 대화방 하단의 진행 버튼은 제거하고, 진행 상태는 상단 제목 우측 배지로 표시한다.</li>
+                    
+                        <li>v14: 단체방 고객카드는 화면 우측을 넘지 않도록 최대폭을 제한하고, 1:1 대화방 말풍선은 중간에서 잘리지 않도록 줄바꿈/폭 규칙을 보정한다.</li>
+
+                    <li>v17: 단체방 고객카드는 채팅 화면 안에서 가능한 최대 가로폭을 사용하되, 화면 우측으로 넘어가지 않도록 <code>max-width: 100%</code>와 <code>box-sizing: border-box</code>를 유지한다.</li>
+                
+                    <li>v18: 단체방 고객카드는 너무 꽉 차 보이지 않도록 가로폭을 약간 줄이고, 상대편이 올린 카드임을 알 수 있도록 좌측 정렬과 여백을 유지한다.</li>
+</ul>
+                </section>
+            
+                <section class="section">
+                    <h2>1:1 대화방 상태 최종 규칙</h2>
+                    <div class="rule-card">
+                        <p><strong>방장</strong>은 1:1 대화방에 고객을 공유한 회원입니다.</p>
+                        <ul>
+                            <li><strong>진행중</strong>: 파란색 표시. 양쪽 채팅 목록에 모두 보입니다.</li>
+                            <li><strong>종료중</strong>: 빨간색 표시. 방장이 아닌 회원이 나간 상태이며, 나간 회원 목록에서는 사라지고 방장 목록에는 남습니다.</li>
+                            <li><strong>종료</strong>: 검정색 표시. 방장이 나간 상태이며, 양쪽 채팅 목록에서 사라지고 향후 PC 관리자 시스템에서 관리합니다.</li>
+                            <li>v16: 단체방 고객카드는 내 고객 카드보다 약간 작게 보이되, 기존보다 가로폭을 넓혀 화면을 더 활용한다.</li>
+                            <li>단체방 고객카드는 화면 우측으로 넘어가지 않도록 최대폭 제한을 유지한다.</li>
+                        </ul>
+                    </div>
+                </section>
+            
+            <section class="card">
+                <h2>v12 적용 규칙</h2>
+                <ul>
+                    <li>채팅방과 내 고객 화면의 고객카드는 동일한 가로형 단일 카드로 사용한다.</li>
+                    <li>고객카드의 정보는 최소화한다: 이름, 상태/소개요청건수, 34세 · 서울 · 약사.</li>
+                    <li>고객 사진은 반명함판 비율을 유지하되, 가로형 카드 안에서 더 크게 보여준다.</li>
+                    <li>채팅방 하단 입력창은 카카오톡처럼 하나의 둥근 입력창 안에 좌측 + 버튼, 중앙 입력 영역, 우측 화살표 전송 버튼을 둔다.</li>
+                    <li>좌측 + 버튼은 사진 또는 파일 선택 용도다.</li>
+                </ul>
+            </section>
+        </main>
+
+        <section id="v2-추가-수정-규칙" class="section">
+            <h2>추가 수정 규칙</h2>
+            <ul>
+                <li>채팅 화면은 상단에 단체방, 하단에 1:1 대화방을 구분해서 보여준다.</li>
+                <li>소개방은 요청 메뉴가 아니라 채팅 메뉴의 1:1 대화방 영역에서 관리한다.</li>
+                <li>요청 화면은 받은요청/보낸요청을 선택할 수 있게 하고, 보낸 요청 목록에는 버튼을 두지 않는다. 보낸 요청 상세화면 하단에서 취소한다.</li>
+                <li>고객 추가와 상세정보 화면에는 반명함판(3.5 × 4.5cm) 비율의 증명사진 등록/변경 영역을 제공한다.</li>
+            
+                    <li>요청 화면은 라디오 버튼이 아니라 상단 탭 UI로 받은요청/보낸요청을 전환한다.</li>
+                    <li>고객카드는 대화방 폭을 고려한 가로형 카드로 구성하고, 표시 정보는 “34세 · 서울 · 약사”처럼 최소화한다.</li>
+                    <li>고객 사진은 반명함판 비율을 유지하되, 대화방에서는 작은 세로형 썸네일로 배치한다.</li>
+                    <li>채팅방 목록에서 비회원이 비공개방을 누르면 참여요청 팝업을 먼저 보여준다.</li>
+                
+                <li>1:1 대화방 상단에는 방 제목 옆에 <strong>진행중/종료</strong> 상태를 표시한다.</li>
+                <li>1:1 대화방 우측 끝에는 햄버거 메뉴를 둔다.</li>
+                <li>햄버거 메뉴에는 <strong>채팅방 나가기</strong>를 표시한다.</li>
+                <li>채팅방 나가기는 <strong>내 채팅 목록에서만 숨김</strong> 처리한다.</li>
+                <li>방장이 나가면 방은 종료되며 양쪽 모두의 채팅 목록에서 보이지 않는다.</li>
+                <li>상대방의 채팅 목록에서는 해당 1:1 대화방이 사라지지 않는다.</li>
+</ul>
+        </section>
+    
+    <section class="rule-section">
+        <h2>v13 채팅 메시지 정렬 규칙</h2>
+        <ul>
+            <li>상대편 메시지는 좌측 정렬한다.</li>
+            <li>내 메시지는 우측 정렬한다.</li>
+            <li>고객카드는 단체방/내 고객에서 가로형 카드로 넓게 표시한다.</li>
+        </ul>
+    </section>
+
+        <!-- v19 수정 규칙: 단체방 고객카드는 상대편이 올린 카드임을 알 수 있도록 화면 폭보다 여유 있게 작게 표시한다. 화면 우측을 넘지 않도록 max-width와 box-sizing 제한은 유지한다. -->
+</body>
+</html>
