@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>내 고객</title>
+        <title>서울 VIP방</title>
         <style>
 
         :root {
@@ -578,87 +578,6 @@
             line-height: 1.5;
         }
 
-
-
-        .room-section {
-            margin-bottom: 22px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 18px 2px 10px;
-            color: #555555;
-            font-size: 14px;
-            font-weight: 900;
-        }
-
-        .section-count {
-            color: #999999;
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .photo-box {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px;
-            border: 2px dashed #dddddd;
-            border-radius: 18px;
-            background: #fafafa;
-        }
-
-        .photo-preview {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 86px;
-            width: 86px;
-            height: 108px;
-            border-radius: 16px;
-            background: #eeeeee;
-            color: #777777;
-            font-size: 34px;
-            font-weight: 900;
-        }
-
-        .photo-text {
-            flex: 1;
-            color: #555555;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1.5;
-        }
-
-        .photo-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 38px;
-            margin-top: 8px;
-            padding: 0 14px;
-            border-radius: 12px;
-            background: var(--yellow);
-            color: #111111;
-            font-size: 14px;
-            font-weight: 900;
-        }
-
-        .photo-small {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 64px;
-            width: 64px;
-            height: 78px;
-            border: 3px solid #ffffff;
-            border-radius: 20px;
-            background: #eeeeee;
-            font-size: 27px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
 
 
         /* v4: 입력 가능 필드 / 읽기 전용 필드 구분 */
@@ -1437,7 +1356,7 @@
 
         .bubble.customer-bubble {
             width: 100% !important;
-            max-width: min(100%, calc(100vw - 44px)) !important;
+            max-width: min(100%, calc(100vw - 38px)) !important;
             box-sizing: border-box !important;
             overflow: visible !important;
         }
@@ -1482,104 +1401,144 @@
             box-sizing: border-box !important;
         }
 
+        
+
+        /* v17: 단체방 고객카드 폭을 화면 안에서 최대한 크게 사용 */
+        .content.chat-room {
+            overflow-x: hidden !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            box-sizing: border-box !important;
+        }
+
+        .bubble-row:has(.customer-bubble) {
+            width: 100% !important;
+        }
+
+        .bubble-row:has(.customer-bubble) > div {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .bubble.customer-bubble {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .bubble.customer-bubble .customer-card,
+        .bubble.customer-bubble .customer-card.compact {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        
+
+        /* v19: 상대편이 올린 고객카드임을 더 잘 구분하도록 폭을 한 단계 더 축소 */
+        .bubble-row:has(.customer-bubble) {
+            justify-content: flex-start !important;
+        }
+
+        .bubble-row:has(.customer-bubble) > div {
+            width: 84% !important;
+            max-width: 84% !important;
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+
+        .bubble.customer-bubble {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+
         </style>
     </head>
     <body>
         <main class="app">
-            <header class="header">
-                <span class="header-icon"></span>
+            <header class="header chat">
+                <a class="back" href="02_home.html">‹</a>
                 <div>
-                    <div class="header-title">내 고객</div>
+                    <div class="header-title">서울 VIP방</div>
                 </div>
-                <a class="header-icon" href="04_customer_add.html">＋</a>
+                <a class="header-icon" href="17_room_info.html">☰</a>
             </header>
             
-            <section class="content">
-                <div class="tabs">
-                    <a class="tab active" href="#">전체</a>
-                    <a class="tab" href="#">여성</a>
-                    <a class="tab" href="#">남성</a>
-                </div>
-
-                <div class="customer-card">
-                    <div class="customer-card-top">
-                        <div class="photo-small">👩</div>
-                        <div class="customer-info">
-                            <div class="customer-title-row">
-                                <div class="customer-name">김영희</div>
-                                <div class="status-row">
-                                <span class="badge blue">진행중</span>
-                                <span class="badge yellow">소개요청 5건</span>
+                        <section class="content chat-room">
+                <div class="bubble-row">
+                    <div>
+                        <div class="sender">김대표</div>
+                        <div class="bubble customer-bubble">
+                            <div class="message-text">서울 거주 약사 여성입니다.</div>
+                            <div class="customer-card compact">
+                                <div class="customer-card-top">
+                                    <div class="photo-small">👩</div>
+                                    <div class="customer-info">
+                                        <div class="customer-title-row">
+                                            <div class="customer-name">김영희</div>
+                                            <div class="status-row">
+                                            <span class="badge blue">진행중</span>
+                                            <span class="badge yellow">소개요청 5건</span>
+                                            </div>
+                                        </div>
+                                        <div class="customer-meta">34세 · 서울 · 약사</div>
+                                    </div>
+                                </div>
+                                <div class="customer-actions">
+                                    <a class="btn secondary" href="06_customer_detail.html">상세정보</a>
+                                    <a class="btn" href="10_request_create.html">소개하기</a>
                                 </div>
                             </div>
-                            <div class="customer-meta">34세 · 서울 · 약사</div>
                         </div>
-                    </div>
-                    <div class="customer-actions">
-                        <a class="btn secondary" href="06_customer_detail.html">상세정보</a>
-                        <a class="btn" href="08_share_customer.html">공유하기</a>
-                    </div>
-                </div>
-
-                <div class="customer-card">
-                    <div class="customer-card-top">
-                        <div class="photo-small">👨</div>
-                        <div class="customer-info">
-                            <div class="customer-title-row">
-                                <div class="customer-name">박철수</div>
-                                <div class="status-row">
-                                <span class="badge blue">진행중</span>
-                                <span class="badge yellow">소개요청 2건</span>
-                                </div>
-                            </div>
-                            <div class="customer-meta">38세 · 서울 · 변호사</div>
-                        </div>
-                    </div>
-                    <div class="customer-actions">
-                        <a class="btn secondary" href="06_customer_detail.html">상세정보</a>
-                        <a class="btn" href="08_share_customer.html">공유하기</a>
                     </div>
                 </div>
 
-                <div class="customer-card">
-                    <div class="customer-card-top">
-                        <div class="photo-small">👩</div>
-                        <div class="customer-info">
-                            <div class="customer-title-row">
-                                <div class="customer-name">이수진</div>
-                                <div class="status-row">
-                                <span class="badge dark">종료</span>
-                                <span class="badge yellow">소개요청 1건</span>
+                <div class="bubble-row me">
+                    <div class="bubble">좋은 분 있으면 소개하겠습니다.</div>
+                </div>
+
+                <div class="bubble-row">
+                    <div>
+                        <div class="sender">최대표</div>
+                        <div class="bubble customer-bubble">
+                            <div class="message-text">종료된 고객입니다.</div>
+                            <div class="customer-card compact">
+                                <div class="customer-card-top">
+                                    <div class="photo-small">👨</div>
+                                    <div class="customer-info">
+                                        <div class="customer-title-row">
+                                            <div class="customer-name">박민수</div>
+                                            <div class="status-row">
+                                            <span class="badge dark">종료</span>
+                                            <span class="badge yellow">소개요청 3건</span>
+                                            </div>
+                                        </div>
+                                        <div class="customer-meta">40세 · 서울 · 사업가</div>
+                                    </div>
+                                </div>
+                                <div class="customer-actions">
+                                    <a class="btn secondary" href="06_customer_detail.html">상세정보</a>
+                                    <a class="btn disabled" href="#">소개하기</a>
                                 </div>
                             </div>
-                            <div class="customer-meta">32세 · 경기 · 회계사</div>
                         </div>
-                    </div>
-                    <div class="customer-actions">
-                        <a class="btn secondary" href="06_customer_detail.html">상세정보</a>
-                        <a class="btn" href="08_share_customer.html">공유하기</a>
                     </div>
                 </div>
             </section>
+
+            <a class="share-fab" href="25_share_customer_room.html" title="공유하기" aria-label="공유하기">+</a>
+
+            <div class="chat-input">
+                <div class="chat-input-inner kakao">
+                    <div class="kakao-message-box">
+                        <button class="kakao-attach-inside" type="button" aria-label="사진 또는 파일 선택">+</button>
+                        <input class="kakao-text-input" type="text" placeholder="메시지 입력" />
+                        <button class="kakao-send-arrow" type="button" aria-label="메시지 전송">➤</button>
+                    </div>
+                </div>
+            </div>
             
-        <nav class="bottom-nav">
-            <a class="nav-item" href="02_home.html">
-                <span>💬</span>
-                채팅
-            </a>
-            <a class="nav-item active" href="05_customer_list.html">
-                <span>👤</span>
-                내 고객
-            </a>
-            <a class="nav-item" href="09_request_list.html">
-                <span>📩</span>
-                요청
-            </a>
-            <a class="nav-item" href="14_more.html">
-                <span>☰</span>
-                더보기
-            </a>
-        </nav>
         </main>
     </body>
 </html>

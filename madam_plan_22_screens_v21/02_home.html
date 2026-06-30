@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>공유하기</title>
+        <title>채팅</title>
         <style>
 
         :root {
@@ -580,6 +580,87 @@
 
 
 
+        .room-section {
+            margin-bottom: 22px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 18px 2px 10px;
+            color: #555555;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .section-count {
+            color: #999999;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .photo-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border: 2px dashed #dddddd;
+            border-radius: 18px;
+            background: #fafafa;
+        }
+
+        .photo-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 86px;
+            width: 86px;
+            height: 108px;
+            border-radius: 16px;
+            background: #eeeeee;
+            color: #777777;
+            font-size: 34px;
+            font-weight: 900;
+        }
+
+        .photo-text {
+            flex: 1;
+            color: #555555;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .photo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 38px;
+            margin-top: 8px;
+            padding: 0 14px;
+            border-radius: 12px;
+            background: var(--yellow);
+            color: #111111;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .photo-small {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 64px;
+            width: 64px;
+            height: 78px;
+            border: 3px solid #ffffff;
+            border-radius: 20px;
+            background: #eeeeee;
+            font-size: 27px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+
         /* v4: 입력 가능 필드 / 읽기 전용 필드 구분 */
         input.form-input,
         select.form-input,
@@ -787,6 +868,53 @@
         #tab-received:checked ~ .received-panel,
         #tab-sent:checked ~ .sent-panel {
             display: block;
+        }
+
+        
+
+        /* v5: 비회원 채팅방 클릭 시 참여요청 팝업 */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.42);
+        }
+
+        .modal-backdrop:target {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(360px, 100%);
+            padding: 20px;
+            border-radius: 22px;
+            background: #ffffff;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .modal-desc {
+            margin-top: 8px;
+            color: #666666;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 18px;
         }
 
 
@@ -1110,7 +1238,12 @@
             color: #1d4ed8;
         }
 
-        .badge.status-ending {
+        .badge.status-closed {
+            background: #222 !important;
+            color: #fff !important;
+        }
+
+        .status-ending {
             background: #fee2e2;
             color: #dc2626;
         }
@@ -1406,34 +1539,109 @@
     <body>
         <main class="app">
             <header class="header">
-                <a class="back" href="07_group_chat.html">‹</a>
-                <div>
-                    <div class="header-title">공유하기</div>
-                </div>
                 <span class="header-icon"></span>
+                <div>
+                    <div class="header-title">채팅</div>
+                </div>
+                <a class="header-icon" href="03_new_chat.html">＋</a>
             </header>
             
             <section class="content">
-                <div class="notice">채팅방 안에서 공유하기를 눌렀기 때문에 올릴 채팅방은 고정 텍스트로 표시합니다.</div>
-                <div class="card">
-                    <div class="field">
-                        <span class="readonly-label">올릴 채팅방</span>
-                        <div class="readonly-field">서울 VIP방</div>
+                <div class="notice">채팅방은 기본적으로 비공개입니다. 참여하려면 방장 수락이 필요합니다.</div>
+
+                <div class="room-section">
+                    <div class="section-header">
+                        <span>단체방</span>
+                        <span class="section-count">3개</span>
                     </div>
-                    <div class="field">
-                        <label class="label" for="share-customer">공유할 내 고객</label>
-                        <select id="share-customer" class="form-input">
-                            <option selected>김영희 · 34세 · 서울 · 약사</option>
-                            <option>박철수 · 38세 · 서울 · 변호사</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label class="label" for="share-message">전달할 말</label>
-                        <textarea id="share-message" class="form-textarea">서울 거주 약사 여성입니다. 전문직 남성 선호합니다.</textarea>
-                    </div>
-                    <a class="btn full" href="07_group_chat.html">공유하기</a>
+
+                    <a class="card list-item" href="07_group_chat.html">
+                        <div class="avatar">💛</div>
+                        <div class="item-main">
+                            <div class="item-title">서울 VIP방</div>
+                            <div class="item-desc">김대표: 서울 거주 약사 여성입니다.</div>
+                        </div>
+                        <div class="time">오전 10:20</div>
+                    </a>
+
+                    <a class="card list-item" href="07_group_chat.html">
+                        <div class="avatar gray">💼</div>
+                        <div class="item-main">
+                            <div class="item-title">강남 전문직방</div>
+                            <div class="item-desc">참여중 · 전문직 고객 공유방</div>
+                        </div>
+                        <div class="time">어제</div>
+                    </a>
+
+                    <a class="card list-item" href="#join-room-popup">
+                        <div class="avatar blue">🔒</div>
+                        <div class="item-main">
+                            <div class="item-title">재혼 모임방</div>
+                            <div class="item-desc">참여회원 8명 · 방장 승인제</div>
+                        </div>
+                        <div class="time">월</div>
+                    </a>
                 </div>
+
+                <div class="room-section">
+                    <div class="section-header">
+                        <span>1:1 대화방</span>
+                        <span class="section-count">소개가 수락된 방</span>
+                    </div>
+
+                    <a class="card list-item" href="11_private_chat.html">
+                        <div class="avatar blue">💬</div>
+                        <div class="item-main">
+                            <div class="item-title">김영희 ↔ 박철수</div>
+                            <div class="item-desc">소개방 · 김대표와 박대표 1:1 대화</div>
+                        </div>
+                        <div class="chat-status-column">
+                            <span class="badge status-progress">진행중</span>
+                            <div class="time">오전 11:05</div>
+                        </div>
+                    </a>
+
+                    <a class="card list-item" href="27_private_chat_ending.html">
+                        <div class="avatar gray">💬</div>
+                        <div class="item-main">
+                            <div class="item-title">이수진 ↔ 최민호</div>
+                            <div class="item-desc">소개방 · 상대 회원이 나간 방</div>
+                        </div>
+                        <div class="chat-status-column">
+                            <span class="badge status-ending">종료중</span>
+                            <div class="time">어제</div>
+                        </div>
+                    </a>
+
+                    <a class="card list-item" href="26_private_chat_closed.html">
+                        <div class="avatar dark">💬</div>
+                        <div class="item-main">
+                            <div class="item-title">정다은 ↔ 한민석</div>
+                            <div class="item-desc">소개방 · 방장이 종료한 방</div>
+                        </div>
+                        <div class="chat-status-column">
+                            <span class="badge status-closed">종료</span>
+                            <div class="time">지난주</div>
+                        </div>
+                    </a>
+                </div>
+
+                <a class="btn full" href="03_new_chat.html">채팅방 만들기</a>
             </section>
+                <div id="join-room-popup" class="modal-backdrop">
+                    <div class="modal-card">
+                        <div class="modal-title">비공개 채팅방입니다</div>
+                        <div class="modal-desc">
+                            이 채팅방은 방장 수락 후 참여할 수 있습니다.<br />
+                            참여요청을 보내면 방장이 확인 후 수락합니다.
+                        </div>
+                        <div class="modal-actions">
+                            <a class="btn secondary" href="02_home.html">닫기</a>
+                            <a class="btn" href="18_join_request.html">참여요청</a>
+                        </div>
+                    </div>
+                </div>
+
             
         <nav class="bottom-nav">
             <a class="nav-item active" href="02_home.html">

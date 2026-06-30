@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>서울 VIP방</title>
+        <title>김영희 ↔ 박철수</title>
         <style>
 
         :root {
@@ -988,6 +988,11 @@
             line-height: 1;
         }
 
+        .status-pill.status-closed {
+            background: #222 !important;
+            color: #fff !important;
+        }
+
         .status-pill {
             display: inline-flex;
             align-items: center;
@@ -1002,6 +1007,104 @@
             font-weight: 900;
             white-space: nowrap;
         }
+
+
+        /* v10: 1:1 대화방 상단 상태 + 햄버거 메뉴 */
+        .private-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .private-title-wrap .header-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 18px;
+        }
+
+        .room-menu-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.54);
+            color: #111111;
+            font-size: 24px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .room-menu-button:active {
+            transform: scale(0.98);
+        }
+
+        .room-menu-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .room-menu-modal:target {
+            display: flex;
+        }
+
+        .room-menu-panel {
+            width: 100%;
+            max-width: 430px;
+            border-radius: 22px;
+            background: #ffffff;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+        }
+
+        .room-menu-title {
+            padding: 18px 20px 10px;
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .room-menu-desc {
+            padding: 0 20px 16px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .room-menu-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 54px;
+            border-top: 1px solid var(--line);
+            color: #ef4444;
+            font-size: 17px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .room-menu-cancel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
+            border-top: 8px solid #f4f4f4;
+            color: #333333;
+            font-size: 16px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
 
         
 
@@ -1356,7 +1459,7 @@
 
         .bubble.customer-bubble {
             width: 100% !important;
-            max-width: min(100%, calc(100vw - 38px)) !important;
+            max-width: min(100%, calc(100vw - 44px)) !important;
             box-sizing: border-box !important;
             overflow: visible !important;
         }
@@ -1401,134 +1504,35 @@
             box-sizing: border-box !important;
         }
 
-        
-
-        /* v17: 단체방 고객카드 폭을 화면 안에서 최대한 크게 사용 */
-        .content.chat-room {
-            overflow-x: hidden !important;
-            padding-left: 12px !important;
-            padding-right: 12px !important;
-            box-sizing: border-box !important;
-        }
-
-        .bubble-row:has(.customer-bubble) {
-            width: 100% !important;
-        }
-
-        .bubble-row:has(.customer-bubble) > div {
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-
-        .bubble.customer-bubble {
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-        }
-
-        .bubble.customer-bubble .customer-card,
-        .bubble.customer-bubble .customer-card.compact {
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-
-        
-
-        /* v19: 상대편이 올린 고객카드임을 더 잘 구분하도록 폭을 한 단계 더 축소 */
-        .bubble-row:has(.customer-bubble) {
-            justify-content: flex-start !important;
-        }
-
-        .bubble-row:has(.customer-bubble) > div {
-            width: 84% !important;
-            max-width: 84% !important;
-            margin-left: 0 !important;
-            margin-right: auto !important;
-        }
-
-        .bubble.customer-bubble {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: auto !important;
-        }
-
         </style>
     </head>
     <body>
         <main class="app">
             <header class="header chat">
                 <a class="back" href="02_home.html">‹</a>
-                <div>
-                    <div class="header-title">서울 VIP방</div>
+                <div class="private-title-wrap">
+                    <div class="header-title">정다은 ↔ 한민석</div>
+                    <span class="status-pill status-closed">종료</span>
                 </div>
-                <a class="header-icon" href="17_room_info.html">☰</a>
+                <a class="room-menu-button" href="#room-menu" aria-label="채팅방 메뉴">☰</a>
             </header>
             
-                        <section class="content chat-room">
+            <section class="content chat-room">
+                <div class="notice">방장이 나가서 종료된 1:1 소개방 예시입니다.</div>
                 <div class="bubble-row">
                     <div>
-                        <div class="sender">김대표</div>
-                        <div class="bubble customer-bubble">
-                            <div class="message-text">서울 거주 약사 여성입니다.</div>
-                            <div class="customer-card compact">
-                                <div class="customer-card-top">
-                                    <div class="photo-small">👩</div>
-                                    <div class="customer-info">
-                                        <div class="customer-title-row">
-                                            <div class="customer-name">김영희</div>
-                                            <div class="status-row">
-                                            <span class="badge blue">진행중</span>
-                                            <span class="badge yellow">소개요청 5건</span>
-                                            </div>
-                                        </div>
-                                        <div class="customer-meta">34세 · 서울 · 약사</div>
-                                    </div>
-                                </div>
-                                <div class="customer-actions">
-                                    <a class="btn secondary" href="06_customer_detail.html">상세정보</a>
-                                    <a class="btn" href="10_request_create.html">소개하기</a>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="sender">정대표</div>
+                        <div class="bubble">여성분 상세 프로필 공유드립니다.</div>
                     </div>
                 </div>
-
-                <div class="bubble-row me">
-                    <div class="bubble">좋은 분 있으면 소개하겠습니다.</div>
-                </div>
-
+                <div class="bubble-row me"><div class="bubble">남성분 프로필도 전달드리겠습니다.</div></div>
                 <div class="bubble-row">
                     <div>
-                        <div class="sender">최대표</div>
-                        <div class="bubble customer-bubble">
-                            <div class="message-text">종료된 고객입니다.</div>
-                            <div class="customer-card compact">
-                                <div class="customer-card-top">
-                                    <div class="photo-small">👨</div>
-                                    <div class="customer-info">
-                                        <div class="customer-title-row">
-                                            <div class="customer-name">박민수</div>
-                                            <div class="status-row">
-                                            <span class="badge dark">종료</span>
-                                            <span class="badge yellow">소개요청 3건</span>
-                                            </div>
-                                        </div>
-                                        <div class="customer-meta">40세 · 서울 · 사업가</div>
-                                    </div>
-                                </div>
-                                <div class="customer-actions">
-                                    <a class="btn secondary" href="06_customer_detail.html">상세정보</a>
-                                    <a class="btn disabled" href="#">소개하기</a>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="sender">정대표</div>
+                        <div class="bubble">이번 주 토요일 일정 가능하실까요?</div>
                     </div>
                 </div>
             </section>
-
-            <a class="share-fab" href="08_share_customer.html" title="공유하기" aria-label="공유하기">+</a>
-
             <div class="chat-input">
                 <div class="chat-input-inner kakao">
                     <div class="kakao-message-box">
@@ -1539,6 +1543,18 @@
                 </div>
             </div>
             
+
+            <div id="room-menu" class="room-menu-modal">
+                <div class="room-menu-panel">
+                    <div class="room-menu-title">채팅방 메뉴</div>
+                    <div class="room-menu-desc">
+                        방장(고객을 공유한 회원)이 나가면 방은 종료되어 양쪽 목록에서 사라집니다.<br>
+                        소개하기를 실행한 회원이 나가면 본인 목록에서만 사라지고, 방장 화면에는 빨간색 종료중으로 남습니다.
+                    </div>
+                    <a class="room-menu-action" href="24_home_after_leave.html">채팅방 나가기</a>
+                    <a class="room-menu-cancel" href="#">닫기</a>
+                </div>
+            </div>
         </main>
     </body>
 </html>
